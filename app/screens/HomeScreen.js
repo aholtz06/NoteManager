@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, Button } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Tab from '../components/Tab';
@@ -25,7 +25,7 @@ const HomeStack = createStackNavigator();
 
 function HomeStackScreen() {
     return (
-        <HomeStack.Navigator>
+        <HomeStack.Navigator screenOptions={{headerStyle: {height: 90,}}}>
             <HomeStack.Screen name="Home" component={HomeScreen} />
             <HomeStack.Screen name="Note" component={NoteScreen} />
         </HomeStack.Navigator>
@@ -38,14 +38,13 @@ const styles = StyleSheet.create({
         backgroundColor: colors.background,
     },
     notesWrapper: {
-        paddingTop: 20,
+        paddingTop: 10,
         paddingHorizontal: 20,
     },
     sectionTitle: {
         fontSize: 24,
         fontWeight: 'bold'
     },
-    items: {},
 });
 
 export default HomeStackScreen;

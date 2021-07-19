@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     tabText: {
-
+        fontSize: 20,
         flexWrap: 'wrap',
     },
 });
