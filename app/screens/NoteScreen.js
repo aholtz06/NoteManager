@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, AsyncStorage } from 'react-native';
-import { TextInput } from 'react-native-paper'
+import { View, StyleSheet } from 'react-native';
+import { TextInput, FAB } from 'react-native-paper';
+import { connect } from 'react-redux';
+
+import addNote from '../redux/actions';
 import colors from '../config/colors';
 
-function NoteScreen({ navigation }) {
-    const [noteTitle, setNoteTitle] = useState('')
-    const [noteContent, setNoteContent] = useState('')
+function NoteScreen(props) {
+    const [noteTitle, setNoteTitle] = useState(Object.keys(props.notes)[0])
+    const [noteContent, setNoteContent] = useState(props.notes[Object.keys(props.notes)[0]])
 
     return (
         <>
@@ -16,7 +19,7 @@ function NoteScreen({ navigation }) {
                     mode = 'focused'
                     onChangeText = {setNoteTitle}
                     style = {styles.title}
-                    blurOnSubmit={true}
+                    blurOnSubmit = {true}
                 />
                 <TextInput
                     label = "Note Content..."
@@ -26,6 +29,13 @@ function NoteScreen({ navigation }) {
                     multiline = {true}
                     scrollEnabled = {true}
                     style = {styles.text}
+                />
+                <FAB
+                    style={styles.fab}
+                    small
+                    icon="check"
+                    //disabled={noteTitle == '' ? true : false}
+                    onPress={() => props.addNote(noteTitle,noteContent)}
                 />
             </View>
         </>
@@ -45,9 +55,15 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     text: {
-        height: 570,
+        height: 250,
         marginBottom: 10,
     },
 });
 
-export default NoteScreen;
+const mapStateToProps = (state) => {
+    return {
+        notes: state.noteReducer.notes,
+    };
+}
+
+export default connect(mapStateToProps, {addNote})(NoteScreen);
